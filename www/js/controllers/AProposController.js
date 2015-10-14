@@ -16,56 +16,96 @@ angular.module('artmobilis').controller('AProposController',
         $scope.$on("$ionicView.beforeLeave", function (e) {
 
         });
-        var hasUserMedia = function hasUserMedia() {
-
-            navigator.getUserMedia = (navigator.getUserMedia ||
-               navigator.webkitGetUserMedia ||
-               navigator.mozGetUserMedia ||
-               navigator.msGetUserMedia);
-
-            if (window.hasUserMedia()) {
-                $scope.usermedia = "getUserMedia supported by the browser.";
-            } else {
-                $scope.usermedia = "getUserMedia is not supported by the browser</em>";
+        // OnLine/Offline
+        {
+          if(navigator.onLine){ // always respond true under firefox41 + linux
+            $scope.infoOnline = "The browser is online.";
             }
-        };
-
-        var hasGeolocation = function hasGeolocation() {
-
-          if (navigator.geolocation) {
-              $scope.gps = "Geolocation supported by the browser.";
-              navigator.geolocation.getCurrentPosition(showPosition, showGeolocError);
-          } else {
-              $scope.gps = "Geolocation is not supported by the browser.";
+            else {
+            $scope.infoOnline = "The browser is offline.";
           }
-
-        };
-
-        function showPosition(position) {
-            $scope.gps += "Lat:" + position.coords.latitude +
-            "Long:" + position.coords.longitude;
         }
 
-        function showGeolocError(error) {
+        // Browser Type
+        {
+          $scope.infoBrowser = navigator.userAgent;
+        }
+
+        // Browser size & Screen Res
+        {
+          var screenResolution = '', screenColorDepth = '';
+          if (self.screen) {
+            screenResolution = screen.width + ' x ' + screen.height;
+            screenColorDepth = screen.colorDepth + ' bit';
+          }
+
+          var bsw = '', bsh = '';
+          if (window.innerWidth){
+            bsw = window.innerWidth;
+            bsh = window.innerHeight;
+          }
+          else if (document.documentElement){
+            bsw = document.documentElement.clientWidth;
+            bsh = document.documentElement.clientHeight;
+          }
+          else if (document.body){
+            bsw = document.body.clientWidth;
+            bsh = document.body.clientHeight;
+          }
+          if (bsw != '' && bsh != ''){
+            $scope.infoSize = "Screen resolution :" + screenResolution + " , color depth :" + screenColorDepth + " , browser size :" + bsw + ' x ' + bsh + ".";
+          }
+        }
+
+        // hasUserMedia
+        var getInfoUserMedia = function getInfoUserMedia() {
+          navigator.getUserMedia = (navigator.getUserMedia ||
+             navigator.webkitGetUserMedia ||
+             navigator.mozGetUserMedia ||
+             navigator.msGetUserMedia);
+
+          if (window.hasUserMedia()) {
+              $scope.infoUsermedia = "getUserMedia supported by the browser.";
+          } else {
+              $scope.infoUsermedia = "getUserMedia is not supported by the browser</em>";
+          }
+        };
+
+        // hasGeolocation
+        var getInfoGeolocation = function getInfoGeolocation() {
+          if (navigator.geolocation) {
+              $scope.infoGps = "Geolocation supported by the browser.";
+              navigator.geolocation.getCurrentPosition(getGeolocPosition, getGeolocError);
+          } else {
+              $scope.infoGps = "Geolocation is not supported by the browser.";
+          }
+        };
+
+        function getGeolocPosition(position) {
+          $scope.infoGps += "Lat:" + position.coords.latitude +
+          "Long:" + position.coords.longitude;
+        }
+
+        function getGeolocError(error) {
           switch(error.code) {
             case error.PERMISSION_DENIED:
-                $scope.gps += " User denied the request for Geolocation."
+                $scope.infoGps += " User denied the request for Geolocation."
                 break;
             case error.POSITION_UNAVAILABLE:
-                $scope.gps += " Location information is unavailable."
+                $scope.infoGps += " Location information is unavailable."
                 break;
             case error.TIMEOUT:
-                $scope.gps += " The request to get user location timed out."
+                $scope.infoGps += " The request to get user location timed out."
                 break;
             case error.UNKNOWN_ERROR:
-                $scope.gps += " An unknown error occurred."
+                $scope.infoGps += " An unknown error occurred."
                 break;
           }
-}
+        }
 
         $scope.$on('$ionicView.enter', function (e) {
-            hasUserMedia();
-            hasGeolocation();
+            getInfoUserMedia();
+            getInfoGeolocation();
 
         });
 
