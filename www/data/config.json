@@ -1,9 +1,7 @@
 {
   "map": {
     "center": {
-      "lng": 7.2868098,
-      "lat": 43.7141482,
-      "zoom": 14
+      "zoom": 13
     },
     "defaults": {
       "tileLayer": "http://tile.stamen.com/watercolor/{z}/{x}/{y}.png",
@@ -18,44 +16,42 @@
     "icons": {
       "default_icon": {},
       "here_icon": {
-        "iconSize": [138, 95],
-        "shadowSize": [50, 64],
         "iconAnchor": [22, 94],
-        "shadowAnchor": [4, 62]
+        "iconUrl": "lib/leaflet/icons/monuments/bigben100.png"
       },
       "blue_icon": {
-        "iconUrl": "img/icones/marker-icon-blue.png",
-        "shadowUrl": "img/icones/markers_shadow.png",
+        "iconUrl": "lib/leaflet/icons/marker-icon-blue.png",
+        "shadowUrl": "lib/leaflet/icons/markers_shadow.png",
         "iconAnchor": [11, 38]
       },
       "orange_icon": {
-        "iconUrl": "img/icones/marker-icon-orange.png",
-        "shadowUrl": "img/icones/markers_shadow.png",
+        "iconUrl": "lib/leaflet/icons/marker-icon-orange.png",
+        "shadowUrl": "lib/leaflet/icons/markers_shadow.png",
         "iconAnchor": [11, 38]
       },
       "green_icon": {
-        "iconUrl": "img/icones/marker-icon-green.png",
-        "shadowUrl": "img/icones/markers_shadow.png",
+        "iconUrl": "lib/leaflet/icons/marker-icon-green.png",
+        "shadowUrl": "lib/leaflet/icons/markers_shadow.png",
         "iconAnchor": [11, 38]
       },
       "grey_icon": {
-        "iconUrl": "img/icones/marker-icon-grey.png",
-        "shadowUrl": "img/icones/markers_shadow.png",
+        "iconUrl": "lib/leaflet/icons/marker-icon-grey.png",
+        "shadowUrl": "lib/leaflet/icons/markers_shadow.png",
         "iconAnchor": [11, 38]
       },
       "red_icon": {
-        "iconUrl": "img/icones/marker-icon-red.png",
-        "shadowUrl": "img/icones/markers_shadow.png",
+        "iconUrl": "lib/leaflet/icons/marker-icon-red.png",
+        "shadowUrl": "lib/leaflet/icons/markers_shadow.png",
         "iconAnchor": [11, 38]
       },
       "purple_icon": {
-        "iconUrl": "img/icones/marker-icon-purple.png",
-        "shadowUrl": "img/icones/markers_shadow.png",
+        "iconUrl": "lib/leaflet/icons/marker-icon-purple.png",
+        "shadowUrl": "lib/leaflet/icons/markers_shadow.png",
         "iconAnchor": [11, 38]
       },
       "yellow_icon": {
-        "iconUrl": "img/icones/marker-icon-yellow.png",
-        "shadowUrl": "img/icones/markers_shadow.png",
+        "iconUrl": "lib/leaflet/icons/marker-icon-yellow.png",
+        "shadowUrl": "lib/leaflet/icons/markers_shadow.png",
         "iconAnchor": [11, 38]
       }
     }

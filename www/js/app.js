@@ -5,6 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('artmobilis', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate', 'webcam'])
 
+  .constant('APP_VERSION', '0.1.20151105')
+
 // whitelist for images
   .config(function ($compileProvider) {
       $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
@@ -21,14 +23,30 @@ angular.module('artmobilis', ['ionic', 'leaflet-directive', 'ngCordova', 'igTrun
       if(window.StatusBar) {
         StatusBar.styleDefault();
       }
+
       // get config
       configFactory.then(
         function(data){
+          // store config
           globals.config = data;
+
+          // check if usermedia
+          globals.config.device = {};
+          globals.config.device.getUsermedia = false;
+          navigator.getUserMedia = (
+            navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia);
+
+          if (window.hasUserMedia()) {
+              globals.config.device.getUsermedia = true;
+          }
         },
         function(msg) {
           console.log(msg);
         });
+
       // get journey
       journeyFactory.then(
         function(data){
@@ -46,7 +64,8 @@ angular.module('artmobilis', ['ionic', 'leaflet-directive', 'ngCordova', 'igTrun
       .state('app', {
         url: "/app",
         abstract: true,
-        templateUrl: "templates/menu.html"
+        templateUrl: "templates/menu.html",
+        controller: "menuController"
       })
 
       .state('app.carte', {
@@ -76,21 +95,12 @@ angular.module('artmobilis', ['ionic', 'leaflet-directive', 'ngCordova', 'igTrun
           }
         }
       })
-      .state('app.apropos', {
-        url: "/apropos",
+      .state('app.about', {
+        url: "/about",
         views: {
           'menuContent' :{
-            templateUrl: "templates/apropos.html",
-            controller: 'AProposController'
-          }
-        }
-      })
-       .state('app.contact', {
-        url: "/contact",
-        views: {
-          'menuContent' :{
-            templateUrl: "templates/contact.html",
-            controller: 'ContactController'
+            templateUrl: "templates/about.html",
+            controller: 'aboutController'
           }
         }
       })
@@ -104,4 +114,9 @@ angular.module('artmobilis', ['ionic', 'leaflet-directive', 'ngCordova', 'igTrun
       })
 
     $urlRouterProvider.otherwise("/app/carte");
-  });
+  })
+  .config(['$logProvider',
+    function($logProvider) {
+        $logProvider.debugEnabled(false);
+    }
+]);
